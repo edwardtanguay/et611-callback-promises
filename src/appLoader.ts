@@ -5,8 +5,13 @@ export const loadEmployees = (elemIdentifier: string) => {
 		const elem = document.querySelector<HTMLDivElement>(elemIdentifier);
 		if (elem) {
 			elem.innerText = 'loading...';
-			const asynchronousPromiseEmployees = await dataLoader.getAsynchronousPromiseEmployees();
-			elem.innerText = asynchronousPromiseEmployees.map(m => m.lastName).join(', ');
+			try {
+				const asynchronousPromiseEmployees = await dataLoader.getAsynchronousPromiseEmployees();
+				elem.innerText = asynchronousPromiseEmployees.map(m => m.lastName).join(', ');
+			}
+			catch (err: any) {
+				elem.innerHTML = `<span class="error">${err.message}</span>`;
+			}
 		}
 	})();
 }
