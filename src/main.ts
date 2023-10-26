@@ -1,5 +1,6 @@
 import './style.css'
 import * as dataLoader from './dataLoader';
+import * as appLoader from './appLoader';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
 
@@ -9,12 +10,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
   ${dataLoader.getSynchronousEmployees().map(m => m.lastName).join(', ')}
 
   <h3>Asynchronous promise employees</h3>
-  <div class="asynchronousPromiseEmployees"></div>
+  <div class="employees"></div>
 `
 
-const asynchronousPromiseEmployeesElem = document.querySelector<HTMLDivElement>('.asynchronousPromiseEmployees');
-if (asynchronousPromiseEmployeesElem) {
-  asynchronousPromiseEmployeesElem.innerText = 'loading...';
-  const asynchronousPromiseEmployees = await dataLoader.getAsynchronousPromiseEmployees();
-  asynchronousPromiseEmployeesElem.innerText = asynchronousPromiseEmployees.map(m => m.lastName).join(', ');
-}
+appLoader.loadEmployees('.employees');
